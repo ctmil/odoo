@@ -115,6 +115,8 @@ class DBFormatter(logging.Formatter):
     def format(self, record):
         record.pid = os.getpid()
         record.dbname = getattr(threading.currentThread(), 'dbname', '?')
+        if hasattr(record, 'args'):
+            record.args = tuple([ str(t).decode('utf8').encode('ascii', errors='replace') if isinstance(t, Exception) else t for t in record.args ])
         return logging.Formatter.format(self, record)
 
 class ColoredFormatter(DBFormatter):
