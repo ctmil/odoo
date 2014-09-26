@@ -32,9 +32,12 @@ from openerp.http import request
 from openerp.tools.translate import _
 from openerp.addons.website.models.website import slug
 
+INTRANET=True
+
 class website_event(http.Controller):
     @http.route(['/event', '/event/page/<int:page>'], type='http', auth="public", website=True)
     def events(self, page=1, **searches):
+        if INTRANET and request.uid == 3: return request.redirect('/web/login')
         cr, uid, context = request.cr, request.uid, request.context
         event_obj = request.registry['event.event']
         type_obj = request.registry['event.type']
@@ -171,6 +174,7 @@ class website_event(http.Controller):
 
     @http.route(['/event/<model("event.event"):event>/page/<path:page>'], type='http', auth="public", website=True)
     def event_page(self, event, page, **post):
+        if INTRANET and request.uid == 3: return request.redirect('/web/login')
         values = {
             'event': event,
             'main_object': event
@@ -189,6 +193,7 @@ class website_event(http.Controller):
 
     @http.route(['/event/<model("event.event"):event>'], type='http', auth="public", website=True)
     def event(self, event, **post):
+        if INTRANET and request.uid == 3: return request.redirect('/web/login')
         if event.menu_id and event.menu_id.child_id:
             target_url = event.menu_id.child_id[0].url
         else:
@@ -199,6 +204,7 @@ class website_event(http.Controller):
 
     @http.route(['/event/<model("event.event"):event>/register'], type='http', auth="public", website=True)
     def event_register(self, event, **post):
+        if INTRANET and request.uid == 3: return request.redirect('/web/login')
         values = {
             'event': event,
             'main_object': event,

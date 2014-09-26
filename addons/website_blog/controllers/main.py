@@ -12,6 +12,7 @@ from openerp.tools.translate import _
 from openerp import SUPERUSER_ID
 from openerp.tools import html2plaintext
 
+INTRANET=True
 
 class QueryURL(object):
     def __init__(self, path='', path_args=None, **args):
@@ -64,6 +65,8 @@ class WebsiteBlog(http.Controller):
         '/blog/page/<int:page>',
     ], type='http', auth="public", website=True)
     def blogs(self, page=1, **post):
+        if INTRANET and request.uid == 3: return request.redirect('/web/login')
+
         cr, uid, context = request.cr, request.uid, request.context
         blog_obj = request.registry['blog.post']
         total = blog_obj.search(cr, uid, [], count=True, context=context)
@@ -102,6 +105,8 @@ class WebsiteBlog(http.Controller):
          - 'date': date_begin optional parameter, used in archives navigation
          - 'blog_url': help object to create URLs
         """
+        if INTRANET and request.uid == 3: return request.redirect('/web/login')
+
         date_begin, date_end = opt.get('date_begin'), opt.get('date_end')
 
         cr, uid, context = request.cr, request.uid, request.context
