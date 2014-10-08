@@ -158,7 +158,7 @@
 </template>
 
 <template id="layout_footer_copyright" inherit_id="website.layout" name="Footer Copyright">
-    <xpath expr="//footer" position="inside">
+    <!--xpath expr="//footer" position="inside">
         <div class="container mt16 mb8">
             <div class="pull-right" t-ignore="true" t-if="not editable">
                 Create a <a href="http://www.odoo.com/page/website-builder">free website</a> with
@@ -168,7 +168,7 @@
                 Copyright &amp;copy; <span t-field="res_company.name">Company name</span>
             </div>
         </div>
-    </xpath>
+    </xpath-->
 </template>
 
 <template id="layout_logo_show" inherit_id="website.layout" customize_show="True" name="Show Logo">
@@ -278,7 +278,7 @@
 </template>
 
 <template id="footer_default" inherit_id="website.footer_custom" customize_show="True" name="Automatic Footer">
-    <xpath expr="//div[@id='footer']" position="replace">
+    <!--xpath expr="//div[@id='footer']" position="replace">
         <div class="container hidden-print">
             <div class="row">
                 <div class="col-md-3">
@@ -338,7 +338,7 @@
                 </div>
             </div>
         </div>
-    </xpath>
+    </xpath-->
 </template>
 
 <template id="publish_management">
